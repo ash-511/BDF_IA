@@ -45,6 +45,12 @@ contract Marketplace {
         emit ProductCreated(productCount, _name, _price, msg.sender, false);
     }
 
+    function resaleProduct(uint _id, uint _price) public {
+        // Resales the product
+        products[_id].purchased = false;
+        products[_id].price = _price;
+    }
+
     function purchaseProduct(uint _id) public payable {
     // Fetch the product
     Product memory _product = products[_id];

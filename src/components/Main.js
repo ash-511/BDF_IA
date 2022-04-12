@@ -118,7 +118,12 @@ class Main extends Component {
                   <td>{product.owner}</td>
                   <td>{ 
                       product.purchased ? 
-                      <button disabled className="btn btn-outline-warning">Bought By You</button>
+                      <button 
+                      name={product.id}
+                      value={product.price}
+                      onClick={(event) => {
+                        this.props.resaleProduct(event.target.name, event.target.value)
+                      }} className="btn btn-outline-warning">Resale</button>
                       : <button disabled className="btn btn-outline-warning">On Sale</button>
                   }</td>
                 </>:null

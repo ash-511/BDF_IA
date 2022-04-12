@@ -73,6 +73,17 @@ class App extends Component {
       this.loadBlockchainData();
     })
   }
+
+  resaleProduct(id, price) {
+    this.setState({ loading: true })
+    let newprice = prompt('Enter new price', window.web3.utils.fromWei(price.toString(), 'Ether'))
+    this.state.marketplace.methods.resaleProduct(id, window.web3.utils.toWei(newprice, 'Ether')).send({ from: this.state.account })
+    .once('transactionHash', (hash) => {
+      this.setState({ loading: false })
+      this.loadBlockchainData();
+    })
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -84,6 +95,7 @@ class App extends Component {
     }
     this.createProduct = this.createProduct.bind(this)
     this.purchaseProduct = this.purchaseProduct.bind(this)
+    this.resaleProduct = this.resaleProduct.bind(this)
 
   }
 
@@ -100,6 +112,7 @@ class App extends Component {
                 products={this.state.products}
                 createProduct={this.createProduct}
                 purchaseProduct={this.purchaseProduct}
+                resaleProduct = {this.resaleProduct}
                 account={this.state.account}
                  />
             }
