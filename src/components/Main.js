@@ -123,8 +123,8 @@ class Main extends Component {
                       value={product.price}
                       onClick={(event) => {
                         this.props.resaleProduct(event.target.name, event.target.value)
-                      }} className="btn btn-outline-warning">Resale</button>
-                      : <button disabled className="btn btn-outline-warning">On Sale</button>
+                      }} className="btn btn-outline-info btn-resale">Resale</button>
+                      : <button disabled className="btn btn-outline-info btn-resale">On Sale</button>
                   }</td>
                 </>:null
               }
