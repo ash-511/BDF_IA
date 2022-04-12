@@ -38,6 +38,7 @@ class App extends Component {
       const productCount = await marketplace.methods.productCount().call()
       this.setState({ productCount })
       // Load products
+      this.setState({ products: [] })
       for (var i = 1; i <= productCount; i++) {
         const product = await marketplace.methods.products(i).call()
         this.setState({
@@ -57,17 +58,20 @@ class App extends Component {
     this.state.marketplace.methods.createProduct(name, price).send({ from: this.state.account })
     .once('transactionHash', (hash) => {
       this.setState({ loading: false })
+      this.loadBlockchainData();
     })
     window.alert('Initiating listing of your Product "' + name)
   }
 
-  purchaseProduct(id, price) {
-    this.setState({ loading: true })
-    this.state.marketplace.methods.purchaseProduct(id).send({ from: this.state.account, value: price })
-    .once('transactionHash', (hash) => {
-      this.setState({ loading: false })
-    })
+  purchaseProduct = async (id, price) => {
     window.alert('Initiating Purchase, make sure you have ' + window.web3.utils.fromWei(price.toString(), 'Ether') + ' ETH in your wallet!')
+    this.setState({ loading: true })
+    await this.state.marketplace.methods.purchaseProduct(id).send({ from: this.state.account, value: price })
+    .once('transactionHash', (hash) => {
+      console.log(hash);
+      this.setState({ loading: false })
+      this.loadBlockchainData();
+    })
   }
   constructor(props) {
     super(props)
