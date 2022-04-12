@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Web3 from 'web3'
-import logo from '../logo.png';
-import './App.css';
 import Marketplace from '../abis/Marketplace.json'
 import Navbar from './Navbar'
 import Main from './Main'
@@ -57,17 +55,19 @@ class App extends Component {
   createProduct(name, price) {
     this.setState({ loading: true })
     this.state.marketplace.methods.createProduct(name, price).send({ from: this.state.account })
-    .once('receipt', (receipt) => {
+    .once('transactionHash', (hash) => {
       this.setState({ loading: false })
     })
+    window.alert('Your Product "' + name + '" has been added!')
   }
 
   purchaseProduct(id, price) {
     this.setState({ loading: true })
     this.state.marketplace.methods.purchaseProduct(id).send({ from: this.state.account, value: price })
-    .once('receipt', (receipt) => {
+    .once('transactionHash', (hash) => {
       this.setState({ loading: false })
     })
+    window.alert('Initiating Purchase, make sure you have ' + price + ' ETH in your wallet!')
   }
   constructor(props) {
     super(props)
@@ -95,7 +95,9 @@ class App extends Component {
               : <Main
                 products={this.state.products}
                 createProduct={this.createProduct}
-                purchaseProduct={this.purchaseProduct} />
+                purchaseProduct={this.purchaseProduct}
+                account={this.state.account}
+                 />
             }
           </main>
 </div>

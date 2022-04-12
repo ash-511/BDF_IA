@@ -53,11 +53,11 @@ contract Marketplace {
     // Make sure the product has a valid id
     require(_product.id > 0 && _product.id <= productCount);
     // Require that there is enough Ether in the transaction
-    require(msg.value >= _product.price);
+    require(msg.value >= _product.price, 'You do not have enough Ether in your account!');
     // Require that the product has not been purchased already
-    require(!_product.purchased);
+    require(!_product.purchased, 'The product has alreayd been sold!');
     // Require that the buyer is not the seller
-    require(_seller != msg.sender);
+    require(_seller != msg.sender, 'You cannot purchase your own product!');
     // Transfer ownership to the buyer
     _product.owner = msg.sender;
     // Mark as purchased
