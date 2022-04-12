@@ -65,7 +65,7 @@ class Main extends Component {
             return(
               <tr className='font-weight-bold' key={key}>
                 {
-                !product.purchased && product.owner!=this.props.account ? 
+                !product.purchased && product.owner!==this.props.account ? 
                 <>
                   <th scope="row">{product.id.toString()}</th>
                   <td class='text-bold'>{product.name}</td>
@@ -110,7 +110,7 @@ class Main extends Component {
             return(
               <tr className='font-weight-bold' key={key}>
                 {
-                product.owner==this.props.account ? 
+                product.owner===this.props.account ? 
                 <>
                   <th scope="row">{product.id.toString()}</th>
                   <td class='text-bold'>{product.name}</td>
