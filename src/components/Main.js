@@ -32,7 +32,9 @@ class Main extends Component {
                   </div>
                   <input
                     id="productPrice"
-                    type="text"
+                    type="number"
+                    step="any"
+                    min="0"
                     ref={(input) => { this.productPrice = input }}
                     className="form-control"
                     placeholder="Product Price"
@@ -62,27 +64,66 @@ class Main extends Component {
           { this.props.products.map((product, key) => {
             return(
               <tr className='font-weight-bold' key={key}>
-                <th scope="row">{product.id.toString()}</th>
-                <td class='text-bold'>{product.name}</td>
-                <td>{window.web3.utils.fromWei(product.price.toString(), 'Ether')} Eth</td>
-                <td>{product.owner}</td>
-                <td>
-                  { !product.purchased ? 
-                    product.owner!=this.props.account ? 
-                    <button
-                        name={product.id}
-                        value={product.price}
-                        onClick={(event) => {
-                          this.props.purchaseProduct(event.target.name, event.target.value)
-                        }}
+                {
+                !product.purchased && product.owner!=this.props.account ? 
+                <>
+                  <th scope="row">{product.id.toString()}</th>
+                  <td class='text-bold'>{product.name}</td>
+                  <td>{window.web3.utils.fromWei(product.price.toString(), 'Ether')} Eth</td>
+                  <td>{product.owner}</td>
+                  <td>
+                      <button
+                      name={product.id}
+                      value={product.price}
+                      onClick={(event) => {
+                        this.props.purchaseProduct(event.target.name, event.target.value)
+                      }}
                       className="btn btn-outline-success">
                         Buy
                       </button>
-                    : <button disabled className="btn btn-outline-warning">Your Product</button>
-                    : <button disabled className="btn btn-outline-danger">Sold</button>
-                  }
-                  </td>
+                    </td>
+                </>:null
+              }
               </tr>
+              
+              
+              )
+            })
+          }
+          </tbody>
+        </table>
+
+        <hr></hr>
+        <h1 className='text-center font-weight-light'>Your Products</h1>
+        <table className="table table-striped">
+          <thead className="tableHead">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Price (Ξ)</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Buy</th>
+            </tr>
+          </thead>
+          <tbody id="productList">
+          { this.props.products.map((product, key) => {
+            return(
+              <tr className='font-weight-bold' key={key}>
+                {
+                product.owner==this.props.account ? 
+                <>
+                  <th scope="row">{product.id.toString()}</th>
+                  <td class='text-bold'>{product.name}</td>
+                  <td>{window.web3.utils.fromWei(product.price.toString(), 'Ether')} Eth</td>
+                  <td>{product.owner}</td>
+                  <td>{ 
+                      product.purchased ? 
+                      <button disabled className="btn btn-outline-warning">Bought By You</button>
+                      : <button disabled className="btn btn-outline-warning">On Sale</button>
+                  }</td>
+                </>:null
+              }
+              </tr>  
               )
             })
           }

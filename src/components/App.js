@@ -58,7 +58,7 @@ class App extends Component {
     .once('transactionHash', (hash) => {
       this.setState({ loading: false })
     })
-    window.alert('Your Product "' + name + '" has been added!')
+    window.alert('Initiating listing of your Product "' + name)
   }
 
   purchaseProduct(id, price) {
@@ -67,7 +67,7 @@ class App extends Component {
     .once('transactionHash', (hash) => {
       this.setState({ loading: false })
     })
-    window.alert('Initiating Purchase, make sure you have ' + price + ' ETH in your wallet!')
+    window.alert('Initiating Purchase, make sure you have ' + window.web3.utils.fromWei(price.toString(), 'Ether') + ' ETH in your wallet!')
   }
   constructor(props) {
     super(props)
