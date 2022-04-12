@@ -60,31 +60,32 @@ class Main extends Component {
           </thead>
           <tbody id="productList">
           { this.props.products.map((product, key) => {
-  return(
-    <tr key={key}>
-      <th scope="row">{product.id.toString()}</th>
-      <td>{product.name}</td>
-      <td>{window.web3.utils.fromWei(product.price.toString(), 'Ether')} Eth</td>
-      <td>{product.owner}</td>
-      <td>
-        { !product.purchased ? 
-          product.owner!=this.props.account ? 
-          <button
-              name={product.id}
-              value={product.price}
-              onClick={(event) => {
-                this.props.purchaseProduct(event.target.name, event.target.value)
-              }}
-             className="btn btn-outline-success">
-              Buy
-            </button>
-          : <button disabled className="btn btn-outline-warning">Your Product</button>
-          : <button disabled className="btn btn-outline-danger">Sold</button>
-        }
-        </td>
-    </tr>
-    )
-    })}
+            return(
+              <tr className='font-weight-bold' key={key}>
+                <th scope="row">{product.id.toString()}</th>
+                <td class='text-bold'>{product.name}</td>
+                <td>{window.web3.utils.fromWei(product.price.toString(), 'Ether')} Eth</td>
+                <td>{product.owner}</td>
+                <td>
+                  { !product.purchased ? 
+                    product.owner!=this.props.account ? 
+                    <button
+                        name={product.id}
+                        value={product.price}
+                        onClick={(event) => {
+                          this.props.purchaseProduct(event.target.name, event.target.value)
+                        }}
+                      className="btn btn-outline-success">
+                        Buy
+                      </button>
+                    : <button disabled className="btn btn-outline-warning">Your Product</button>
+                    : <button disabled className="btn btn-outline-danger">Sold</button>
+                  }
+                  </td>
+              </tr>
+              )
+            })
+          }
           </tbody>
         </table>
       </div>
