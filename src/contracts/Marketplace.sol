@@ -29,7 +29,7 @@ contract Marketplace {
         bool purchased
     );
     constructor() public {
-        name = "Dapp University Marketplace";
+        name = "BlocKart Marketplace";
     }
 
     function createProduct(string memory _name, uint _price) public {

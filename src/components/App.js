@@ -60,7 +60,7 @@ class App extends Component {
       this.setState({ loading: false })
       this.loadBlockchainData();
     })
-    window.alert('Initiating listing of your Product "' + name)
+    window.alert('Initiating listing of your Product "' + name + '"')
   }
 
   purchaseProduct = async (id, price) => {
@@ -68,7 +68,6 @@ class App extends Component {
     this.setState({ loading: true })
     await this.state.marketplace.methods.purchaseProduct(id).send({ from: this.state.account, value: price })
     .once('transactionHash', (hash) => {
-      console.log(hash);
       this.setState({ loading: false })
       this.loadBlockchainData();
     })
